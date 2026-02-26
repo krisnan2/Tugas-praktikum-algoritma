@@ -1,0 +1,93 @@
+#include <iostream>
+using namespace std;
+struct Buku {
+    string nama;
+    int harga;
+};
+
+void sequentialSearch(Buku daftarBuku[], int n, string cariNama) {
+    bool found = false;
+    int i = 0;
+    
+    while (i < n && !found) {
+        if (daftarBuku[i].nama == cariNama) {
+            found = true;
+            cout << "=== SEQUENTIAL SEARCH ===" << endl;
+            cout << "Buku ditemukan!" << endl;
+            cout << "Nama Buku : " << daftarBuku[i].nama << endl;
+            cout << "Harga     : Rp" << daftarBuku[i].harga << endl;
+        } else {
+            i++;
+        }
+    }
+    
+    if (!found) {
+        cout << "=== SEQUENTIAL SEARCH ===" << endl;
+        cout << "Buku '" << cariNama << "' tidak ditemukan dalam sistem." << endl;
+    }
+}
+
+void binarySearch(Buku daftarBuku[], int n, string cariNama) {
+    int awal = 0;
+    int akhir = n - 1;
+    int tengah;
+    bool found = false;
+    
+    while (!found && awal <= akhir) {
+        tengah = (awal + akhir) / 2; 
+        
+        if (daftarBuku[tengah].nama == cariNama) {
+            found = true;
+            cout << "=== BINARY SEARCH ===" << endl;
+            cout << "Buku ditemukan pada indeks ke-" << tengah << endl;
+            cout << "Nama Buku : " << daftarBuku[tengah].nama << endl;
+            cout << "Harga     : Rp" << daftarBuku[tengah].harga << endl;
+        } else {
+            if (cariNama < daftarBuku[tengah].nama) {
+                akhir = tengah - 1; 
+            } else {
+                awal = tengah + 1; 
+            }
+        }
+    }
+    
+    if (!found) {
+        cout << "=== BINARY SEARCH ===" << endl;
+        cout << "Buku '" << cariNama << "' tidak ditemukan dalam sistem." << endl;
+    }
+}
+
+int main() {
+    const int jumlahBuku = 5;
+    Buku rakBuku[jumlahBuku] = {
+        {"Algoritma", 74000},
+        {"Basis Data", 81000},
+        {"Jaringan", 80000},
+        {"Kalkulus", 60000},
+        {"Pemrograman", 120000}
+    };
+    
+    int pilihan;
+    string namaDicari;
+    
+    cout << "Selamat Datang di Toko Buku!" << endl;
+    cout << "Masukkan nama buku yang ingin dicari (Contoh: Kalkulus): ";
+    getline(cin, namaDicari);
+    
+    cout << "\nPilih Metode Pencarian:" << endl;
+    cout << "1. Sequential Search" << endl;
+    cout << "2. Binary Search" << endl;
+    cout << "Pilihan Anda (1/2): ";
+    cin >> pilihan;
+    cout << endl;
+    
+    if (pilihan == 1) {
+        sequentialSearch(rakBuku, jumlahBuku, namaDicari);
+    } else if (pilihan == 2) {
+        binarySearch(rakBuku, jumlahBuku, namaDicari);
+    } else {
+        cout << "Pilihan tidak valid." << endl;
+    }
+    
+    return 0;
+}
